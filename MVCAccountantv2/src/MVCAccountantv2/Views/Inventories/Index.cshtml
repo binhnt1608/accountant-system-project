@@ -1,0 +1,63 @@
+@model IEnumerable<MVCAccountantv2.Models.Inventory>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.InventoryDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InventoryCompositionID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InventoryTypeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InventoryDiameterID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InventoryListPrice)
+        </th>
+        <th></th>
+    </tr>
+    
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.InventoryDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InventoryComposition.InventoryCompositionCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InventoryType.InventoryTypeCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InventoryDiameter.InventoryDiameterCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InventoryListPrice)
+        </td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.InventoryID">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.InventoryID">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.InventoryID">Delete</a>
+        </td>
+    </tr>
+}
+</table>
+<p>
+    <ul>
+        <li><a asp-controller="InventoryCompositions" asp-action="Index">Inventory Composition</a></li>
+        <li><a asp-controller="InventoryTypes" asp-action="Index">Inventory Type</a></li>
+        <li><a asp-controller="InventoryDiameters" asp-action="Index">Inventory Diameter</a></li>
+    </ul>
+</p>

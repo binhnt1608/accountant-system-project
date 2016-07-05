@@ -1,0 +1,38 @@
+@model IEnumerable<MVCAccountantv2.Models.Vendor>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.VendorID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VendorName)
+        </th>
+        <th></th>
+    </tr>
+    
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.VendorID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VendorName)
+        </td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.VendorID">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.VendorID">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.VendorID">Delete</a>
+        </td>
+    </tr>
+}
+</table>
