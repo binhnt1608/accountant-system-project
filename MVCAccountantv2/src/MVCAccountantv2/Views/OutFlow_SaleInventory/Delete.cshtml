@@ -1,0 +1,34 @@
+@model MVCAccountantv2.Models.OutFlow_SaleInventory
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>OutFlow_SaleInventory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.InvoicePrive)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.InvoicePrive)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.QuantitySold)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.QuantitySold)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </form>
+</div>

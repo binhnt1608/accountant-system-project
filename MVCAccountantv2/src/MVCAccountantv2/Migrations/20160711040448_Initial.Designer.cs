@@ -8,7 +8,7 @@ using MVCAccountantv2.Models;
 namespace MVCAccountantv2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160324144812_Initial")]
+    [Migration("20160711040448_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -208,6 +208,10 @@ namespace MVCAccountantv2.Migrations
                     b.Property<string>("CustomerZipcode")
                         .IsRequired();
 
+                    b.Property<int?>("SaleInvoiceID");
+
+                    b.Property<int?>("SaleOrderSaleOrderID");
+
                     b.HasKey("CustomerID");
                 });
 
@@ -225,6 +229,10 @@ namespace MVCAccountantv2.Migrations
                     b.Property<int>("EmployeeTypeID");
 
                     b.Property<int?>("PurchaseReceivingReportID");
+
+                    b.Property<int?>("SaleInvoiceID");
+
+                    b.Property<int?>("SaleOrderSaleOrderID");
 
                     b.HasKey("EmployeeID");
                 });
@@ -257,6 +265,10 @@ namespace MVCAccountantv2.Migrations
                         .IsRequired();
 
                     b.Property<int>("InventoryTypeID");
+
+                    b.Property<int?>("OutFlow_SaleInventoryInvoiceID");
+
+                    b.Property<int?>("Reservation_SaleOrderInventorySaleOrderID");
 
                     b.HasKey("InventoryID");
                 });
@@ -297,6 +309,22 @@ namespace MVCAccountantv2.Migrations
                     b.HasKey("InventoryTypeID");
                 });
 
+            modelBuilder.Entity("MVCAccountantv2.Models.OutFlow_SaleInventory", b =>
+                {
+                    b.Property<int>("InvoiceID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("InventoryID");
+
+                    b.Property<float>("InvoicePrive");
+
+                    b.Property<int>("QuantitySold");
+
+                    b.Property<int?>("SaleInvoiceID");
+
+                    b.HasKey("InvoiceID");
+                });
+
             modelBuilder.Entity("MVCAccountantv2.Models.Purchase", b =>
                 {
                     b.Property<int>("ReceivingReportID")
@@ -313,6 +341,62 @@ namespace MVCAccountantv2.Migrations
                     b.Property<int?>("VendorVendorID");
 
                     b.HasKey("ReceivingReportID");
+                });
+
+            modelBuilder.Entity("MVCAccountantv2.Models.Reservation_SaleOrderInventory", b =>
+                {
+                    b.Property<int>("SaleOrderID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("InventoryID");
+
+                    b.Property<int>("QuantityOrdered");
+
+                    b.Property<float>("SOPrice");
+
+                    b.Property<int?>("SaleOrderSaleOrderID");
+
+                    b.HasKey("SaleOrderID");
+                });
+
+            modelBuilder.Entity("MVCAccountantv2.Models.Sale", b =>
+                {
+                    b.Property<int>("InvoiceID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CustomerID");
+
+                    b.Property<int>("EmployeeID");
+
+                    b.Property<int?>("OutFlow_SaleInventoryInvoiceID");
+
+                    b.Property<int>("SaleAmount");
+
+                    b.Property<int>("SaleOrderID");
+
+                    b.Property<DateTime>("ShippingDate");
+
+                    b.HasKey("InvoiceID");
+                });
+
+            modelBuilder.Entity("MVCAccountantv2.Models.SaleOrder", b =>
+                {
+                    b.Property<int>("SaleOrderID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CustomerID");
+
+                    b.Property<string>("CustomerPO");
+
+                    b.Property<int>("EmployeeID");
+
+                    b.Property<int?>("Reservation_SaleOrderInventorySaleOrderID");
+
+                    b.Property<float>("SaleOrderAmount");
+
+                    b.Property<DateTime>("SaleOrderDate");
+
+                    b.HasKey("SaleOrderID");
                 });
 
             modelBuilder.Entity("MVCAccountantv2.Models.Vendor", b =>
@@ -383,6 +467,17 @@ namespace MVCAccountantv2.Migrations
                         .HasForeignKey("VendorID");
                 });
 
+            modelBuilder.Entity("MVCAccountantv2.Models.Customer", b =>
+                {
+                    b.HasOne("MVCAccountantv2.Models.Sale")
+                        .WithMany()
+                        .HasForeignKey("SaleInvoiceID");
+
+                    b.HasOne("MVCAccountantv2.Models.SaleOrder")
+                        .WithMany()
+                        .HasForeignKey("SaleOrderSaleOrderID");
+                });
+
             modelBuilder.Entity("MVCAccountantv2.Models.Employee", b =>
                 {
                     b.HasOne("MVCAccountantv2.Models.CashDisbursement")
@@ -396,6 +491,14 @@ namespace MVCAccountantv2.Migrations
                     b.HasOne("MVCAccountantv2.Models.Purchase")
                         .WithMany()
                         .HasForeignKey("PurchaseReceivingReportID");
+
+                    b.HasOne("MVCAccountantv2.Models.Sale")
+                        .WithMany()
+                        .HasForeignKey("SaleInvoiceID");
+
+                    b.HasOne("MVCAccountantv2.Models.SaleOrder")
+                        .WithMany()
+                        .HasForeignKey("SaleOrderSaleOrderID");
                 });
 
             modelBuilder.Entity("MVCAccountantv2.Models.EmployeeType", b =>
@@ -418,6 +521,25 @@ namespace MVCAccountantv2.Migrations
                     b.HasOne("MVCAccountantv2.Models.InventoryType")
                         .WithMany()
                         .HasForeignKey("InventoryTypeID");
+
+                    b.HasOne("MVCAccountantv2.Models.OutFlow_SaleInventory")
+                        .WithMany()
+                        .HasForeignKey("OutFlow_SaleInventoryInvoiceID");
+
+                    b.HasOne("MVCAccountantv2.Models.Reservation_SaleOrderInventory")
+                        .WithMany()
+                        .HasForeignKey("Reservation_SaleOrderInventorySaleOrderID");
+                });
+
+            modelBuilder.Entity("MVCAccountantv2.Models.OutFlow_SaleInventory", b =>
+                {
+                    b.HasOne("MVCAccountantv2.Models.Inventory")
+                        .WithMany()
+                        .HasForeignKey("InventoryID");
+
+                    b.HasOne("MVCAccountantv2.Models.Sale")
+                        .WithMany()
+                        .HasForeignKey("SaleInvoiceID");
                 });
 
             modelBuilder.Entity("MVCAccountantv2.Models.Purchase", b =>
@@ -429,6 +551,47 @@ namespace MVCAccountantv2.Migrations
                     b.HasOne("MVCAccountantv2.Models.Vendor")
                         .WithMany()
                         .HasForeignKey("VendorVendorID");
+                });
+
+            modelBuilder.Entity("MVCAccountantv2.Models.Reservation_SaleOrderInventory", b =>
+                {
+                    b.HasOne("MVCAccountantv2.Models.Inventory")
+                        .WithMany()
+                        .HasForeignKey("InventoryID");
+
+                    b.HasOne("MVCAccountantv2.Models.SaleOrder")
+                        .WithMany()
+                        .HasForeignKey("SaleOrderSaleOrderID");
+                });
+
+            modelBuilder.Entity("MVCAccountantv2.Models.Sale", b =>
+                {
+                    b.HasOne("MVCAccountantv2.Models.Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerID");
+
+                    b.HasOne("MVCAccountantv2.Models.Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeID");
+
+                    b.HasOne("MVCAccountantv2.Models.OutFlow_SaleInventory")
+                        .WithMany()
+                        .HasForeignKey("OutFlow_SaleInventoryInvoiceID");
+                });
+
+            modelBuilder.Entity("MVCAccountantv2.Models.SaleOrder", b =>
+                {
+                    b.HasOne("MVCAccountantv2.Models.Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerID");
+
+                    b.HasOne("MVCAccountantv2.Models.Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeID");
+
+                    b.HasOne("MVCAccountantv2.Models.Reservation_SaleOrderInventory")
+                        .WithMany()
+                        .HasForeignKey("Reservation_SaleOrderInventorySaleOrderID");
                 });
 
             modelBuilder.Entity("MVCAccountantv2.Models.Vendor", b =>

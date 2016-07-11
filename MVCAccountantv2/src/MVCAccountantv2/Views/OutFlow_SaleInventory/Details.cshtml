@@ -1,0 +1,30 @@
+@model MVCAccountantv2.Models.OutFlow_SaleInventory
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OutFlow_SaleInventory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.InvoicePrive)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.InvoicePrive)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.QuantitySold)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.QuantitySold)
+        </dd>
+    </dl>
+</div>
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.InvoiceID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</p>

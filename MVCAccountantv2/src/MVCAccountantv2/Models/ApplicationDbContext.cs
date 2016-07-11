@@ -28,5 +28,9 @@ namespace MVCAccountantv2.Models
         public DbSet<InventoryComposition> InventoryComposition { get; set; }
         public DbSet<InventoryType> InventoryType { get; set; }
         public DbSet<InventoryDiameter> InventoryDiameter { get; set; }
+        public DbSet<SaleOrder> SaleOrder { get; set; }
+        public DbSet<Sale> Sale { get; set; }
+        public DbSet<OutFlow_SaleInventory> OutFlow_SaleInventory { get; set; }
+        public DbSet<Reservation_SaleOrderInventory> Reservation_SaleOrderInventory { get; set; }
     }
 }
